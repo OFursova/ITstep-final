@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function enter()
+    {
+        return view('cabinet');
+    }
+
+    public function edit()
+    {
+        return view('cabinet')->with('success', 'Changes applied!');
+    }
 }

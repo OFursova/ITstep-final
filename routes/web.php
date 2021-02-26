@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@index');
+Route::get('/cabinet', 'HomeController@enter')->middleware('auth');
+Route::post('/cabinet', 'HomeController@edit')->middleware('role:registered-user');
+
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function(){
+    Route::get('/', 'AdminController@index');
+    Route::get('/permits', 'AdminController@permits');
+    Route::post('/permits', 'AdminController@change');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
