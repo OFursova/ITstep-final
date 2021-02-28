@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
 Route::get('/cabinet', 'HomeController@enter')->middleware('auth');
-Route::post('/cabinet', 'HomeController@edit')->middleware('role:registered-user');
+Route::post('/cabinet', 'HomeController@edit');
 
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function(){

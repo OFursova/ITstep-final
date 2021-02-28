@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,13 +27,20 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function enter()
+    public function enter(User $user)
     {
-        return view('cabinet');
+        return view('cabinet', compact('user'));
     }
 
-    public function edit()
+    public function edit(Request $request, User $user)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|unique',
+            'password' => 'required',
+            'phone' => 'required|unique',
+        ]);
+        $user->update($request->all());
         return view('cabinet')->with('success', 'Changes applied!');
     }
 }
