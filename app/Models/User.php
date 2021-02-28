@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->permissions->contains('name', $permission);
     }
+
+    public function getAvatarAttribute($value)
+    {
+       return $value ? $value : '/images/no_image.jpg';
+    }
 }

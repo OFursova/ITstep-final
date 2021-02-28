@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,8 +28,9 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function enter(User $user)
+    public function enter()
     {
+        $user = Auth::user();
         return view('cabinet', compact('user'));
     }
 
@@ -36,11 +38,11 @@ class HomeController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|unique',
-            'password' => 'required',
-            'phone' => 'required|unique',
+            'email' => 'required',
+            'phone' => 'required',
         ]);
+        dd($request);
         $user->update($request->all());
-        return view('cabinet')->with('success', 'Changes applied!');
+        return view('cabinet', compact('user'))->with('success', 'Changes applied!');
     }
 }

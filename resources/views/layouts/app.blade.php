@@ -73,17 +73,7 @@
             </div>
           </nav>
     </header>
-    
-    <section class="container">
-        <div class="row my-2">
-            <div class="col-md-3 w-100">
-                @section('sidebar')
-                @show
-            </div>
-            <div class="col-md-9">
-                @yield('content')
-            </div>
-        </div>
+        @yield('content')
     </section>
 
     <footer></footer>
