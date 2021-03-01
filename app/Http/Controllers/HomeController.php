@@ -37,7 +37,7 @@ class HomeController extends Controller
         return view('cabinet', compact('user'));
     }
 
-    public function edit(Request $request, User $user)
+    public function edit(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
@@ -58,13 +58,16 @@ class HomeController extends Controller
               );
         }
         
-        $user = new User();
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->avatar = 'images/avatars/'.$name;
-        $user->update();
+        $user->save();
         // $user->update($request->all());
-        return view('cabinet', compact('user'))->with('success', 'Changes applied!');
+        $success = 'Changes applied!';
+
+        return view('cabinet', compact('user', 'success'));
     }
 }

@@ -8,15 +8,15 @@
         {{-- Showing error messages in a div on top: --}}
         @include('messages.errors')
 
-        @if (session('success'))
-        <div class="alert alert-success">{{session('success')}}</div>
+        @if (isset($success))
+        <div class="alert alert-success">{{$success}}</div>
         @endif
         </div>
     </div>
     <div class="row py-2">
         <div class="col-md-3 w-100">
             {{-- avatar --}}
-            <img src="{{asset($user->avatar)}}" alt="{{$user->avatar}}" style="height:20vh">  
+            <img src="{{asset($user->avatar)}}" alt="{{$user->avatar}}" style="max-height:50vh; min-height:20vh; max-width:90%" class="mx-auto">  
         </div>
         <div class="col-md-9">
             {!! Form::model($user, ['url' => '/cabinet', 'files' => true]) !!}
