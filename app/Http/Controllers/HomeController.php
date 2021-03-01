@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -41,8 +44,27 @@ class HomeController extends Controller
             'email' => 'required',
             'phone' => 'required',
         ]);
-        dd($request);
-        $user->update($request->all());
+        // avatar
+        $allowed = ['png', 'jpg', 'jpeg', 'webp', 'jfif'];
+        $extension = $request->file('avatar')->extension();
+       
+        if (in_array($extension, $allowed)) {
+            $name = $request->file('avatar')->getClientOriginalName();
+            //$path = $request->file('avatar')->storeAs('images', $name, 'img');
+            Storage::disk('img')->putFileAs(
+                'avatars/',
+                $request->file('avatar'),
+                $name
+              );
+        }
+        
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->avatar = 'images/avatars/'.$name;
+        $user->update();
+        // $user->update($request->all());
         return view('cabinet', compact('user'))->with('success', 'Changes applied!');
     }
 }

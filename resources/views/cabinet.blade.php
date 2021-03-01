@@ -5,6 +5,12 @@
     <div class="row py-2">
         <div class="col-12 w-100">
         <h1 class="my-2 text-center">Edit Your Profile</h1>
+        {{-- Showing error messages in a div on top: --}}
+        @include('messages.errors')
+
+        @if (session('success'))
+        <div class="alert alert-success">{{session('success')}}</div>
+        @endif
         </div>
     </div>
     <div class="row py-2">
