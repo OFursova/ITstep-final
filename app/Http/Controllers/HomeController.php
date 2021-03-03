@@ -34,7 +34,8 @@ class HomeController extends Controller
     public function enter()
     {
         $user = Auth::user();
-        return view('cabinet', compact('user'));
+        $title = 'My profile';
+        return view('cabinet', compact('user', 'title'));
     }
 
     public function edit(Request $request)
@@ -44,6 +45,7 @@ class HomeController extends Controller
             'email' => 'required',
             'phone' => 'required',
         ]);
+        $title = 'My profile';
         // avatar
         $allowed = ['png', 'jpg', 'jpeg', 'webp', 'jfif'];
         $extension = $request->file('avatar')->extension();
@@ -68,6 +70,6 @@ class HomeController extends Controller
         // $user->update($request->all());
         $success = 'Changes applied!';
 
-        return view('cabinet', compact('user', 'success'));
+        return view('cabinet', compact('user', 'success', 'title'));
     }
 }

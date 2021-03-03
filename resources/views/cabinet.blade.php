@@ -46,7 +46,7 @@
                 @enderror
             </div>
                 <button class="btn btn-success">Save Changes</button>
-                {!! Form::close() !!}
+            {!! Form::close() !!}
         </div>
     </div>
 </section>

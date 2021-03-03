@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,15 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('/cabinet', 'HomeController@enter')->middleware('auth');
-Route::post('/cabinet', 'HomeController@edit');
+Route::get('/',  [HomeController::class, 'index']);
+Route::get('/cabinet', [HomeController::class, 'enter'])->middleware('auth');
+Route::post('/cabinet', [HomeController::class, 'edit']);
 
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function(){
-    Route::get('/', 'AdminController@index');
-    Route::get('/permits', 'AdminController@permits');
-    Route::post('/permits', 'AdminController@change');
+    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/permits/{id}', [AdminController::class, 'permits']);
+    Route::post('/permits/{id}', [AdminController::class, 'change']);
+    Route::resource('/roles', RoleController::class);
 });
 
 Auth::routes();
